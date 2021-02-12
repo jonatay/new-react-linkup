@@ -10,12 +10,16 @@ const saga = createSagaMiddleware();
 export const history = createBrowserHistory();
 
 // const enhancer = composeEnhancers(applyMiddleware(saga));
+const composeEnhancers =
+  (typeof window !== "undefined" &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
 
 export default function configureStore(preloadedState) {
   const store = createStore(
     createRootReducer(history), // root reducer with router state
     preloadedState,
-    compose(
+    composeEnhancers(
       applyMiddleware(
         routerMiddleware(history), // for dispatching history actions
         // ... other middlewares ...
