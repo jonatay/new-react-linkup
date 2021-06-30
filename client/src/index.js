@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 // import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import configureStore, { history } from "./configureStore";
 import { ConnectedRouter } from "connected-react-router";
 import { initAuth } from "./mid/common/auth";
+
+import "antd/dist/antd.css";
+import "./index.css";
+
 const initialState = {};
 const store = configureStore(initialState);
 
