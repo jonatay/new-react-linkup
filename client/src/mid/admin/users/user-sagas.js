@@ -38,7 +38,8 @@ function* watchAuthentication() {
 function* watchLocationChange() {
   while (true) {
     let { payload } = yield take(LOCATION_CHANGE);
-    if (payload.pathname.indexOf("admin") === 1) {
+    // if (payload.pathname.indexOf("admin") === 1) {
+    if (payload.location.pathname.indexOf("admin") === 1) {
       yield put(userActions.loadUsers());
     }
   }

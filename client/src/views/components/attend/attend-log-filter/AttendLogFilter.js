@@ -18,9 +18,9 @@ import {
   Modal,
   Radio,
   Spin,
-  Alert
+  Alert,
 } from "antd";
-const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+// const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
 const { RangePicker } = DatePicker;
 // const Option = Select.Option;
@@ -32,7 +32,7 @@ class AttendLogFilter extends React.Component {
     options: {},
     depts: null,
     excludeWeekends: true,
-    showPdf: false
+    showPdf: false,
   };
 
   constructor(props) {
@@ -46,7 +46,7 @@ class AttendLogFilter extends React.Component {
       loadAttendLogs,
       attendLogFilter: { depts },
       attendLogListParams,
-      setAttendLogFilter
+      setAttendLogFilter,
     },
     state
   ) {
@@ -90,26 +90,26 @@ class AttendLogFilter extends React.Component {
     this.clearPdf();
   }
 
-  onDeptBranchChange = deptBranch => {
+  onDeptBranchChange = (deptBranch) => {
     this.setState({ deptBranch });
     this.props.setAttendLogFilter({ depts: [] });
   };
 
-  onDeptChange = depts => {
+  onDeptChange = (depts) => {
     //console.log("onDeptChange ", depts);
     Cookies.set("attend-filter-depts", JSON.stringify(depts), { expires: 7 });
     this.setState({
-      depts
+      depts,
     });
     this.props.setAttendLogFilter({ depts });
     this.clearPdf();
   };
 
-  onExcludeWeekendsChange = excludeWeekends => {
+  onExcludeWeekendsChange = (excludeWeekends) => {
     // console.log('onExcludeWeekendsChange', excludeWeekends);
     this.setState({ excludeWeekends });
     Cookies.set("attend-filter-excludeWeekends", excludeWeekends, {
-      expires: 7
+      expires: 7,
     });
     this.props.setAttendLogFilter({ excludeWeekends });
     this.clearPdf();
@@ -120,7 +120,7 @@ class AttendLogFilter extends React.Component {
     this.props.loadAttendLogPdf({
       depts: this.state.depts,
       dateRange: this.state.params.dateRange,
-      excludeWeekends: this.state.excludeWeekends
+      excludeWeekends: this.state.excludeWeekends,
     });
     this.setState({ showPdf: true });
   }
@@ -156,8 +156,8 @@ class AttendLogFilter extends React.Component {
         deptBranch === "dept" ? "Select by Dept" : "Select by Branch",
       treeDefaultExpandAll: true,
       style: {
-        width: "100%"
-      }
+        width: "100%",
+      },
     };
     return (
       <div>
@@ -174,11 +174,11 @@ class AttendLogFilter extends React.Component {
               onClick={() => this.handlePdfModalClose()}
             >
               Close
-            </Button>
+            </Button>,
           ]}
           style={{ top: 10 }}
           bodyStyle={{
-            height: 500
+            height: 500,
           }}
         >
           {blobUrl !== null ? (
@@ -201,7 +201,7 @@ class AttendLogFilter extends React.Component {
               <Radio.Group
                 value={this.state.deptBranch}
                 size="medium"
-                onChange={e => this.onDeptBranchChange(e.target.value)}
+                onChange={(e) => this.onDeptBranchChange(e.target.value)}
               >
                 <Radio.Button value="dept">Dept</Radio.Button>
                 <Radio.Button value="branch">Branch</Radio.Button>
@@ -216,7 +216,7 @@ class AttendLogFilter extends React.Component {
               <p
                 style={{
                   margin: "5px",
-                  textAlign: "right"
+                  textAlign: "right",
                 }}
               >
                 Date Range:
@@ -225,7 +225,7 @@ class AttendLogFilter extends React.Component {
             <Col span={15}>
               <RangePicker
                 value={this.state.params.dateRange}
-                onChange={date => this.onDateRangeChange(date)}
+                onChange={(date) => this.onDateRangeChange(date)}
                 allowClear={false}
               />
             </Col>

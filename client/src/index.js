@@ -15,13 +15,13 @@ const store = configureStore(initialState);
 
 function render(Component) {
   ReactDOM.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Component />
-        </ConnectedRouter>
-      </Provider>
-    </React.StrictMode>,
+    // <React.StrictMode>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Component />
+      </ConnectedRouter>
+    </Provider>,
+    // </React.StrictMode>,
     document.getElementById("root")
   );
 }

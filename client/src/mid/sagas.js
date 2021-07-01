@@ -8,7 +8,7 @@ import { hrSagas } from "./hr";
 import { simplePaySagas } from "./simple-pay";
 import { sageOneSagas } from "./sage-one";
 
-export default function* sagas() {
+export default function* rootSaga() {
   yield all([
     ...commonSagas,
     ...adminSagas,
@@ -17,6 +17,6 @@ export default function* sagas() {
     ...attendSagas,
     ...hrSagas,
     ...simplePaySagas,
-    ...sageOneSagas
+    ...sageOneSagas,
   ]);
 }
