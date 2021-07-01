@@ -65,7 +65,7 @@ function* refreshToken(user) {
 
 function* signInWithEmailPassword({ payload: { email, password } }) {
   const authData = yield call(
-    [firebaseAuth, firebaseAuth.signInAndRetrieveDataWithEmailAndPassword],
+    [firebaseAuth, firebaseAuth.signInWithEmailAndPassword],
     email,
     password
   );

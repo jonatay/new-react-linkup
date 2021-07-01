@@ -7,6 +7,12 @@ import { authActions, getAuthError } from "../../../../mid/common/auth";
 import { LoginForm } from "../../../components/common/login-form";
 
 import { notification, Button, Row, Col } from "antd";
+import {
+  GithubOutlined,
+  GoogleOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+} from "@ant-design/icons";
 
 import "./sign-in-page.css";
 
@@ -41,28 +47,28 @@ const SignInPage = ({
         <Col span={6} style={{ paddingLeft: 30, paddingRight: 30 }}>
           <Button
             className="sign-in__button"
-            icon="github"
+            icon={<GithubOutlined />}
             onClick={signInWithGithub}
           >
             GitHub
           </Button>
           <Button
             className="sign-in__button"
-            icon="google-plus"
+            icon={<GoogleOutlined />}
             onClick={signInWithGoogle}
           >
             Google
           </Button>
           <Button
             className="sign-in__button"
-            icon="twitter"
+            icon={<TwitterOutlined />}
             onClick={signInWithTwitter}
           >
             Twitter
           </Button>
           <Button
             className="sign-in__button"
-            icon="facebook"
+            icon={<FacebookOutlined />}
             disabled
             // onClick={signInWithFacebook}
           >

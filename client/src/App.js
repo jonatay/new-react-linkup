@@ -12,28 +12,81 @@ import AppHeader from "./views/components/common/app-header";
 
 import {
   authActions,
+  getPhotoURL,
   isAuthenticated,
   navActions,
   getAclFront,
   getCurrentLocation,
 } from "./mid/common";
 
-import { Button, Layout } from "antd";
+import { Layout } from "antd";
 const { Content } = Layout;
 
-const App = () => (
-  <div className="App">
-    <Layout>
-      <Content>
-        <Button type="primary">Button</Button>
+const App = ({
+  authenticated,
+  signOut,
+  photoURL,
+  navigateTo,
+  aclFront,
+  currentNavPath,
+  location,
+}) => {
+  if (!authenticated)
+    return (
+      <Layout>
+        <Content>
+          <Switch>
+            {serviceRoutes.map((route, idx) => (
+              <RequireUnauthRoute
+                key={idx}
+                path={route.path}
+                component={route.component}
+                {...authenticated}
+              />
+            ))}
+            <Redirect
+              to={{
+                pathname: "/sign-in",
+                state: { from: location },
+              }}
+            />
+          </Switch>
+        </Content>
+      </Layout>
+    );
+  return (
+    <Layout style={{ height: "inherit" }}>
+      <AppHeader
+        authenticated={authenticated}
+        signOut={signOut}
+        photoURL={photoURL}
+        navigateTo={navigateTo}
+        aclFront={aclFront}
+        currentNavPath={currentNavPath}
+      />
+      <Content style={{ padding: "0 10px", marginTop: 60 }}>
+        <div style={{ background: "#fff", padding: 5 }}>
+          <Switch>
+            {privateRoutes.map((route, idx) => (
+              <RequireAuthRoute
+                key={idx}
+                path={route.path}
+                component={route.component}
+                authenticated={authenticated}
+              />
+            ))}
+            <Route component={NoMatch} />
+          </Switch>
+        </div>
       </Content>
     </Layout>
-  </div>
-);
+  );
+};
 
 App.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   signOut: PropTypes.func.isRequired,
+  photoURL: PropTypes.string,
   navigateTo: PropTypes.func.isRequired,
   currentNavPath: PropTypes.string.isRequired,
 };
@@ -43,6 +96,7 @@ App.propTypes = {
 //-------------------------------------
 
 const mapStateToProps = (state) => ({
+  photoURL: getPhotoURL(state),
   authenticated: isAuthenticated(state),
   aclFront: getAclFront(state),
   currentNavPath: getCurrentLocation(state),
