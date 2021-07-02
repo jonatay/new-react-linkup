@@ -3,7 +3,8 @@
     SageBankGrid : React Class Component
 */
 import React from "react";
-import ReactTable from "react-table";
+import ReactTable from "react-table-6";
+import "react-table-6/react-table.css";
 // import 'react-table/react-table.css';
 
 class SageBBranchGrid extends React.Component {

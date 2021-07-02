@@ -6,7 +6,8 @@ import React from "react";
 import dateFormat from "dateformat";
 import moment from "moment";
 
-import ReactTable from "react-table";
+import ReactTable from "react-table-6";
+import "react-table-6/react-table.css";
 // import 'react-table/react-table.css';
 import { Tag, Popover } from "antd";
 import "./style.css";

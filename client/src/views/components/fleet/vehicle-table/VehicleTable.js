@@ -2,82 +2,81 @@
     Jono : 18 02 11
     VehiclesTable : React Class Component
 */
-import React from 'react';
+import React from "react";
 
-import { Table, Tag, Button, Modal } from 'antd';
+import { Table, Tag, Button, Modal } from "antd";
 
-import './style.css';
+import "./style.css";
 
 class VehicleTable extends React.Component {
   state = {
-    data: []
+    data: [],
   };
-
-  // componentWillReceiveProps = nextProps => {
-  //   const { vehicles } = nextProps;
-  //   this.setState({ data: vehicles.toArray() });
-  // };
 
   showToggleVehicleActiveConfirm = (vehicle, toggleVehicleIsActive) => {
     Modal.confirm({
-      title: 'Are you sure toggle active on this vehicle?',
+      title: "Are you sure toggle active on this vehicle?",
       content: `reg: ${vehicle.registration} name: ${vehicle.name}`,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
       onOk() {
         toggleVehicleIsActive(vehicle);
       },
       onCancel() {
-        console.log('Cancel');
-      }
+        console.log("Cancel");
+      },
     });
   };
 
   columns = [
     {
-      title: 'Reg.',
-      dataIndex: 'registration',
+      title: "Reg.",
+      dataIndex: "registration",
       width: 100,
-      defaultSortOrder: 'ascend',
+      defaultSortOrder: "ascend",
       //fixed: 'left',
       sorter: (a, b) =>
-        a.registration.toLowerCase().localeCompare(b.registration.toLowerCase())
+        a.registration
+          .toLowerCase()
+          .localeCompare(b.registration.toLowerCase()),
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: "Name",
+      dataIndex: "name",
       width: 250,
-      sorter: (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      sorter: (a, b) =>
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
     },
 
     {
-      title: 'Cost Centre Groups',
-      dataIndex: 'cost_centre_groups',
+      title: "Cost Centre Groups",
+      dataIndex: "cost_centre_groups",
       render: (text, record) => (
         <div>
-          {record.vehicleCcgs.map(
-            ccg =>
-              ccg.cost_centre_group ? (
-                <Tag key={ccg.cost_centre_group.id}>
-                  {ccg.cost_centre_group.name
-                    ? ccg.cost_centre_group.name.length < 13
-                      ? ccg.cost_centre_group.name
-                      : ccg.cost_centre_group.name.substr(0, 13) + '...'
-                    : ''}
-                </Tag>
-              ) : (
-                'none'
-              )
+          {record.vehicleCcgs.map((ccg) =>
+            ccg.cost_centre_group ? (
+              <Tag key={ccg.cost_centre_group.id}>
+                {ccg.cost_centre_group.name
+                  ? ccg.cost_centre_group.name.length < 13
+                    ? ccg.cost_centre_group.name
+                    : ccg.cost_centre_group.name.substr(0, 13) + "..."
+                  : ""}
+              </Tag>
+            ) : (
+              "none"
+            )
           )}
         </div>
-      )
+      ),
     },
     {
-      title: 'Fims Driver(s)',
-      dataIndex: 'fims_drivers',
+      title: "Fims Driver(s)",
+      dataIndex: "fims_drivers",
       width: 200,
-      render: (fimsDrivers) => <p>{fimsDrivers ? fimsDrivers.join(',') : 'nu'}</p>
+      render: (fimsDrivers) => (
+        <p>{fimsDrivers ? fimsDrivers.join(",") : "nu"}</p>
+      ),
     },
     {
       //fixed: 'right',
@@ -94,11 +93,11 @@ class VehicleTable extends React.Component {
           />
           <Button
             style={{ marginLeft: 5 }}
-            type={record.is_active ? 'danger' : 'primary'}
+            type={record.is_active ? "danger" : "primary"}
             ghost={true}
             size="small"
             shape="circle"
-            icon={record.is_active ? 'delete' : 'plus-circle-o'}
+            icon={record.is_active ? "delete" : "plus-circle-o"}
             onClick={() =>
               this.showToggleVehicleActiveConfirm(
                 record,
@@ -107,8 +106,8 @@ class VehicleTable extends React.Component {
             }
           />
         </span>
-      )
-    }
+      ),
+    },
   ];
   render() {
     return (

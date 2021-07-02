@@ -28,15 +28,15 @@ import {
 } from "../../../../mid/fleet";
 
 import { Tabs } from "antd";
-import Icon from "@ant-design/icons";
+import { TagsTwoTone } from "@ant-design/icons";
 import PageHeader from "../../../components/common/page-header/PageHeader";
+import ErrorBoundary from "../../../components/common/error-boundry";
 const TabPane = Tabs.TabPane;
 
 class FleetSettingsPage extends React.Component {
   state = {
     activeKey: Cookies.get("fleetSettingsActiveKey") || "cost-centre-groups",
   };
-
   render() {
     return (
       <div>
@@ -54,29 +54,33 @@ class FleetSettingsPage extends React.Component {
             key="cost-centre-groups"
             tab={
               <span>
-                <Icon type="tags" />
+                <TagsTwoTone />
                 Cost Centre Groups
               </span>
             }
           >
-            <CostCentreGroupGrid {...this.props} />
+            <ErrorBoundary>
+              <CostCentreGroupGrid {...this.props} />
+            </ErrorBoundary>
           </TabPane>
           <TabPane
             key="cost-centres"
             tab={
               <span>
-                <Icon type="tags-o" />
+                <TagsTwoTone />
                 Cost Centres
               </span>
             }
           >
-            <CostCentreGrid {...this.props} />
+            <ErrorBoundary>
+              <CostCentreGrid {...this.props} />
+            </ErrorBoundary>
           </TabPane>
           <TabPane
             key="transaction-types"
             tab={
               <span>
-                <Icon type="tags" />
+                <TagsTwoTone />
                 Transaction Types
               </span>
             }
@@ -87,7 +91,7 @@ class FleetSettingsPage extends React.Component {
             key="fims-import"
             tab={
               <span>
-                <Icon type="tags" />
+                <TagsTwoTone />
                 Fims Import
               </span>
             }

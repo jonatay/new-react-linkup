@@ -3,9 +3,16 @@
     CostCentreGroupGrid : React Class Component
 */
 import React from "react";
-import ReactTable from "react-table";
-// import 'react-table/react-table.css';
+import ReactTable from "react-table-6";
+import "react-table-6/react-table.css";
 import { Button, Input, Modal } from "antd";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  DeleteOutlined,
+  EditTwoTone,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
 const _ = require("lodash");
 
 class CostCentreGroupGrid extends React.Component {
@@ -137,13 +144,12 @@ class CostCentreGroupGrid extends React.Component {
           <Button
             type="primary"
             size="small"
-            icon="plus"
             disabled={this.findEditRow("add")}
             onClick={() => {
               this.onAddRow();
             }}
           >
-            Add
+            <PlusCircleOutlined />
           </Button>
         ),
       },
@@ -154,7 +160,7 @@ class CostCentreGroupGrid extends React.Component {
       },
       {
         sortable: false,
-        width: 75,
+        width: 80,
         Cell: ({ original }) => (
           <span>
             {this.findEditRow(original.id) ? (
@@ -164,23 +170,25 @@ class CostCentreGroupGrid extends React.Component {
                   ghost={true}
                   size="small"
                   shape="circle"
-                  icon="check"
                   disabled={!this.validateEditing(original.id)}
                   onClick={() => {
                     this.onPostEdit(original.id);
                   }}
-                />
+                >
+                  <CheckOutlined />
+                </Button>
                 {"  "}
                 <Button
                   type="danger"
                   ghost={true}
                   size="small"
                   shape="circle"
-                  icon="close"
                   onClick={() => {
                     this.onCancelEdit(original.id);
                   }}
-                />
+                >
+                  <CloseOutlined />
+                </Button>
               </span>
             ) : (
               <span>
@@ -189,25 +197,27 @@ class CostCentreGroupGrid extends React.Component {
                   ghost={true}
                   size="small"
                   shape="circle"
-                  icon="edit"
                   onClick={() => {
                     this.onEditRow(original);
                   }}
-                />
+                >
+                  <EditTwoTone />
+                </Button>
                 {"  "}
                 <Button
                   type="danger"
                   ghost={true}
                   size="small"
                   shape="circle"
-                  icon="delete"
                   onClick={() => {
                     this.onDeleteRow(
                       original,
                       this.props.removeCostCentreGroup
                     );
                   }}
-                />
+                >
+                  <DeleteOutlined />
+                </Button>
               </span>
             )}
           </span>
@@ -236,22 +246,3 @@ class CostCentreGroupGrid extends React.Component {
 }
 
 export default CostCentreGroupGrid;
-
-/*
- {
-                  const data = [...this.state.data];
-                  data[index].isEditing = true;
-                  this.setState({ data });
-
-              }
- */
-// contentEditable
-// suppressContentEditableWarning
-// onBlur={e => {
-//   const data = [...this.state.data];
-//   data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-//   this.setState({ data });
-// }}
-// dangerouslySetInnerHTML={{
-//   __html: this.state.data[cellInfo.index][cellInfo.column.id]
-// }}
