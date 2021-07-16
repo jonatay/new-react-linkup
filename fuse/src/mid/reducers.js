@@ -31,14 +31,14 @@ export default createRootReducer;
 export function combineMidReducers() {
 	return combineReducers({
 		// router: connectRouter(history),
-		common: commonReducer,
-		admin: adminReducer,
-		fleet: fleetReducer,
-		form: formReducer,
-		sagePay: sagePayReducer,
-		attend: attendReducer,
-		hr: hrReducer,
-		simplePay: simplePayReducer,
-		sageOne: sageOneReducer
+		// common: commonReducer,
+		// admin: adminReducer,
+		fleet: fleetReducer
+		// form: formReducer,
+		// sagePay: sagePayReducer,
+		// attend: attendReducer,
+		// hr: hrReducer,
+		// simplePay: simplePayReducer,
+		// sageOne: sageOneReducer
 	});
 }
