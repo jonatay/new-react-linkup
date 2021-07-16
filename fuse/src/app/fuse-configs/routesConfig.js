@@ -1,24 +1,12 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
 import FuseUtils from '@fuse/utils';
-import ExampleConfig from 'app/main/example/ExampleConfig';
-import LoginConfig from 'app/main/login/LoginConfig';
-import LogoutConfig from 'app/main/logout/LogoutConfig';
-import pagesConfigs from 'app/main/pages/pagesConfigs';
-import RegisterConfig from 'app/main/register/RegisterConfig';
+import RootConfig from 'app/main/pages/root/RootConfig';
 
-const routeConfigs = [...pagesConfigs, ExampleConfig, LogoutConfig, LoginConfig, RegisterConfig];
+import LoginConfig from 'app/main/pages/auth/login/LoginConfig';
+import RegisterConfig from 'app/main/pages/auth/register/RegisterConfig';
+import { authRoles } from 'app/auth';
 
-const routes = [
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'staff', 'user']),
-	{
-		path: '/',
-		exact: true,
-		component: () => <Redirect to="/example" />
-	},
-	{
-		component: () => <Redirect to="/pages/errors/error-404" />
-	}
-];
+const routeConfigs = [LoginConfig, RegisterConfig, RootConfig];
+
+const routes = [...FuseUtils.generateRoutesFromConfigs(routeConfigs, authRoles.user)];
 
 export default routes;

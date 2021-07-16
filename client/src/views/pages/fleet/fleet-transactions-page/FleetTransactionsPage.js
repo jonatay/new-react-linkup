@@ -9,7 +9,11 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import { Tabs } from "antd";
-import Icon from "@ant-design/icons";
+import {
+  BarChartOutlined,
+  CalculatorOutlined,
+  TableOutlined,
+} from "@ant-design/icons";
 
 import {
   fleetTransactionActions,
@@ -62,7 +66,7 @@ const FleetTransactionsPage = class FleetTransactionsPage extends Component {
             closable={false}
             tab={
               <span>
-                <Icon type="table" /> transactions
+                <TableOutlined /> transactions
               </span>
             }
           >
@@ -73,7 +77,7 @@ const FleetTransactionsPage = class FleetTransactionsPage extends Component {
             closable={false}
             tab={
               <span>
-                <Icon type="calculator" /> summary
+                <CalculatorOutlined /> summary
               </span>
             }
           >
@@ -84,7 +88,7 @@ const FleetTransactionsPage = class FleetTransactionsPage extends Component {
             closable={false}
             tab={
               <span>
-                <Icon type="area-chart" /> chart
+                <BarChartOutlined /> chart
               </span>
             }
           >

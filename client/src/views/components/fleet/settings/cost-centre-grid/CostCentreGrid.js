@@ -3,9 +3,16 @@
     CostCentreGrid : React Class Component
 */
 import React from "react";
-import ReactTable from "react-table";
+import ReactTable from "react-table-6";
+import "react-table-6/react-table.css";
 // import 'react-table/react-table.css';
 import { Button, Input, Modal, Select, Tag } from "antd";
+import {
+  CopyTwoTone,
+  DeleteOutlined,
+  EditOutlined,
+  PlusCircleTwoTone,
+} from "@ant-design/icons";
 const Option = Select.Option;
 
 const _ = require("lodash");
@@ -209,12 +216,12 @@ class CostCentreGrid extends React.Component {
           <Button
             type="primary"
             size="small"
-            icon="plus"
             disabled={this.findEditRow("add")}
             onClick={() => {
               this.onAddRow();
             }}
           >
+            <PlusCircleTwoTone />
             Add
           </Button>
         ),
@@ -313,33 +320,36 @@ class CostCentreGrid extends React.Component {
                   ghost={true}
                   // size="small"
                   shape="circle"
-                  icon="edit"
                   onClick={() => {
                     this.onEditRow(original);
                   }}
-                />
+                >
+                  <EditOutlined />
+                </Button>
                 {"  "}
                 <Button
                   type="danger"
                   ghost={true}
                   // size="small"
                   shape="circle"
-                  icon="delete"
                   onClick={() => {
                     this.onDeleteRow(original, this.props.removeCostCentre);
                   }}
-                />
+                >
+                  <DeleteOutlined />
+                </Button>
                 {"  "}
                 <Button
                   type="dashed"
                   ghost={false}
                   // size="small"
                   shape="circle"
-                  icon="copy"
                   onClick={() => {
                     this.onCopyRow(original);
                   }}
-                />
+                >
+                  <CopyTwoTone />
+                </Button>
               </span>
             )}
           </span>

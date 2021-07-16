@@ -1,22 +1,26 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom'
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import ErrorBoundary from "../error-boundry";
 
 // Check if authenticated, else sign-in
-const RequireAuthRoute = ({component: Component, authenticated, ...rest}) => (
+const RequireAuthRoute = ({ component: Component, authenticated, ...rest }) => (
   <Route
     {...rest}
-    render={props => {
+    render={(props) => {
       return authenticated ? (
-        <Component {...props}/>
+        <ErrorBoundary>
+          <Component {...props} />
+        </ErrorBoundary>
       ) : (
-        <Redirect to={{
-          pathname: '/sign-in',
-          state: {from: props.location}
-        }}/>
-      )
+        <Redirect
+          to={{
+            pathname: "/sign-in",
+            state: { from: props.location },
+          }}
+        />
+      );
     }}
   />
 );
-
 
 export default RequireAuthRoute;

@@ -21,7 +21,7 @@ import VehicleTable from "../../../components/fleet/vehicle-table";
 import VehicleForm from "../../../components/fleet/vehicle-form";
 
 import { Tabs, Switch, Row, Col } from "antd";
-import Icon from "@ant-design/icons";
+import { TableOutlined, CarOutlined } from "@ant-design/icons";
 import PageHeader from "../../../components/common/page-header/PageHeader";
 const TabPane = Tabs.TabPane;
 
@@ -34,12 +34,17 @@ const IntVehicleTable = ({
   showInactive,
   toggleShowInactive,
 }) => (
-  <Row>
+  <div>
     <Row style={{ marginBottom: 12 }}>
+      <Col span={4}>
+        <p>Filter:</p>
+      </Col>
       <Col span={8}>
         <FilterInput filterText={vehicleFilter} onTextChange={filterVehicles} />
       </Col>
-      <Col span={4}>
+    </Row>
+    <Row style={{ marginBottom: 12 }}>
+      <Col span={8}>
         <Switch
           checkedChildren="Hide Inactive"
           unCheckedChildren="Show Inactive"
@@ -53,7 +58,7 @@ const IntVehicleTable = ({
       onEditVehicle={(vehicle) => onEditVehicle(vehicle)}
       toggleVehicleIsActive={toggleVehicleIsActive}
     />
-  </Row>
+  </div>
 );
 
 class FleetVehiclesPage extends React.Component {
@@ -129,7 +134,7 @@ class FleetVehiclesPage extends React.Component {
             closable={false}
             tab={
               <span>
-                <Icon type="table" />
+                <TableOutlined />
               </span>
             }
           >
@@ -143,7 +148,8 @@ class FleetVehiclesPage extends React.Component {
               key={vehicle.id}
               tab={
                 <span>
-                  <Icon type="car">{vehicle.registration}</Icon>
+                  <CarOutlined />
+                  {vehicle.registration}
                 </span>
               }
             >

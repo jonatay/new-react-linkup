@@ -1,15 +1,23 @@
-import React from 'react';
+import { lazy } from 'react';
+import { authRoles } from 'app/auth';
 
 const RegisterPageConfig = {
 	settings: {
 		layout: {
-			config: {}
+			config: {
+				navbar: { display: false },
+				toolbar: { display: false },
+				rightSidePanel: { display: false },
+				leftSidePanel: { display: false },
+				footer: { display: false }
+			}
 		}
 	},
 	routes: [
 		{
 			path: '/pages/auth/register',
-			component: React.lazy(() => import('./RegisterPage'))
+			component: lazy(() => import('./RegisterPage')),
+			auth: authRoles.onlyGuest
 		}
 	]
 };

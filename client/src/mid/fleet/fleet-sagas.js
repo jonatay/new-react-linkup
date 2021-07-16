@@ -3,13 +3,15 @@ import {
   driverSagas,
   settingSagas,
   fleetTransactionSagas,
-  vehicleCcgSagas
-} from './index';
+  vehicleCcgSagas,
+  vehicleDriverSagas,
+} from "./index";
 
 export const fleetSagas = [
   ...vehicleSagas,
   ...driverSagas,
   ...settingSagas,
   ...fleetTransactionSagas,
-  ...vehicleCcgSagas
+  ...vehicleCcgSagas,
+  ...vehicleDriverSagas,
 ];

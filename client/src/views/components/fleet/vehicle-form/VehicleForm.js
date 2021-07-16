@@ -1,10 +1,11 @@
-import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
-import moment from 'moment';
-import validate from './validate';
-import './style.css';
+import React from "react";
+import { Field, FieldArray, reduxForm } from "redux-form";
+import moment from "moment";
+import validate from "./validate";
+import "./style.css";
 
-import { Form, Input, Button, Row, Col, DatePicker, Select } from 'antd';
+import { Form, Input, Button, Row, Col, DatePicker, Select } from "antd";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 
 const Option = Select.Option;
 
@@ -13,12 +14,12 @@ const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 5 }
+    sm: { span: 5 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 12 }
-  }
+    sm: { span: 12 },
+  },
 };
 
 const renderField = ({ placeholder, input, meta: { error, touched } }) => (
@@ -26,7 +27,7 @@ const renderField = ({ placeholder, input, meta: { error, touched } }) => (
     {...formItemLayout}
     label={placeholder}
     hasFeedback
-    validateStatus={error && touched ? 'error' : 'success'}
+    validateStatus={error && touched ? "error" : "success"}
     help={error}
   >
     <Input {...input} />
@@ -38,20 +39,22 @@ const renderSelectField = ({
   input,
   options,
   field,
-  meta: { error, touched }
+  meta: { error, touched },
 }) => (
   <FormItem
     {...formItemLayout}
     // label={placeholder}
-    validateStatus={error && touched ? 'error' : 'success'}
+    validateStatus={error && touched ? "error" : "success"}
     help={error}
   >
     <Select
       style={{ width: 120 }}
       value={input.value.toString()}
-      onChange={val => input.onChange(parseInt(val, 10))}
+      onChange={(val) => input.onChange(parseInt(val, 10))}
     >
-      {options.map(d => <Option key={d.id.toString()}>{d.name}</Option>)}
+      {options.map((d) => (
+        <Option key={d.id.toString()}>{d.name}</Option>
+      ))}
     </Select>
   </FormItem>
 );
@@ -59,18 +62,20 @@ const renderSelectField = ({
 const renderDatePickerField = ({
   placeholder,
   input,
-  meta: { error, touched }
+  meta: { error, touched },
 }) => (
   <FormItem
     {...formItemLayout}
     // label={placeholder}
-    validateStatus={error && touched ? 'error' : 'success'}
+    validateStatus={error && touched ? "error" : "success"}
     help={error}
   >
     <DatePicker
       style={{ width: 130 }}
       value={input.value ? moment(input.value) : null}
-      onChange={date => input.onChange(date ? date.format('YYYY-MM-DD') : null)}
+      onChange={(date) =>
+        input.onChange(date ? date.format("YYYY-MM-DD") : null)
+      }
       dateForm="YYYY-MM-DD"
     />
   </FormItem>
@@ -80,20 +85,22 @@ const renderVehicleCccgFieldArray = ({
   fields,
   costCentreGroups,
   vehicleId,
-  meta: { error, submitFailed }
+  meta: { error, submitFailed },
 }) => (
   <div>
     <Row>
       <Button
         onClick={() => fields.push({ vehicle_id: vehicleId, start_date: null })}
         type="primary"
-        icon="plus-circle-o"
+        // icon="plus-circle-o"
         ghost={true}
-      />
+      >
+        <PlusOutlined />
+      </Button>
     </Row>
     {error && (
       <Row style={{ marginTop: 10 }}>
-        <span style={{ color: 'red' }}>{error}</span>
+        <span style={{ color: "red" }}>{error}</span>
       </Row>
     )}
     <Row style={{ marginTop: 10, marginBottom: 0 }}>
@@ -114,7 +121,7 @@ const renderVehicleCccgFieldArray = ({
             placeholder="cost centre group"
             type="Number"
           >
-            {costCentreGroups.map(d => (
+            {costCentreGroups.map((d) => (
               <option key={`${d.id}`}>{d.name}</option>
             ))}
           </Field>
@@ -132,9 +139,11 @@ const renderVehicleCccgFieldArray = ({
             onClick={() => fields.remove(index)}
             shape="circle"
             type="danger"
-            icon="delete"
+            // icon="delete"
             ghost={true}
-          />
+          >
+            <DeleteOutlined />
+          </Button>
         </Col>
       </Row>
     ))}
@@ -144,14 +153,14 @@ const renderVehicleCccgFieldArray = ({
   </div>
 );
 
-const VehicleForm = props => {
+const VehicleForm = (props) => {
   const {
     handleSubmit,
     pristine,
     reset,
     submitting,
     invalid,
-    costCentreGroups
+    costCentreGroups,
   } = props;
   return (
     <Form>
@@ -217,5 +226,5 @@ const VehicleForm = props => {
 export default reduxForm({
   // form: 'vehicleForm', // a unique identifier for this form
   enableReinitialize: true,
-  validate
+  validate,
 })(VehicleForm);

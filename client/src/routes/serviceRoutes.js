@@ -1,9 +1,9 @@
-import asyncComponent from "../views/components/common/async-component";
+import React from "react";
 
-const SignInPage = asyncComponent(() =>
+const SignInPage = React.lazy(() =>
   import("../views/pages/service/sign-in-page")
 );
-const RegisterUserPage = asyncComponent(() =>
+const RegisterUserPage = React.lazy(() =>
   import("../views/pages/service/register-user-page")
 );
 

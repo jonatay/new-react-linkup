@@ -5,7 +5,12 @@
 import React from "react";
 
 import { Table, Button, Modal, Row } from "antd";
-import Icon from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseCircleFilled,
+  DeleteOutlined,
+  RocketOutlined,
+} from "@ant-design/icons";
 
 import dateFormat from "dateformat";
 
@@ -15,14 +20,14 @@ class FimsPeriodTable extends React.Component {
   checkTot = (rec) => (
     <span style={{ marginLeft: 5 }}>
       {Math.round(rec.check_total) === Math.round(rec.batch_total) ? (
-        <Icon type="check" style={{ color: "green" }} />
+        <CheckOutlined style={{ color: "green" }} />
       ) : (
-        <Icon type="close" style={{ color: "red" }} />
+        <CloseCircleFilled style={{ color: "red" }} />
       )}
       {Math.round(rec.check_total) === Math.round(rec.transactions_total) ? (
-        <Icon type="check" style={{ color: "green" }} />
+        <CheckOutlined type="check" style={{ color: "green" }} />
       ) : (
-        <Icon type="close" style={{ color: "red" }} />
+        <CloseCircleFilled type="close" style={{ color: "red" }} />
       )}
     </span>
   );
@@ -129,7 +134,6 @@ class FimsPeriodTable extends React.Component {
           ghost={false}
           size="small"
           // shape="square"
-          icon="rocket"
           onClick={() => {
             this.props.importFimsPeriodBatch(
               this.props.fimsPeriods
@@ -148,6 +152,7 @@ class FimsPeriodTable extends React.Component {
           }}
           disabled={!this.props.fimsPeriodIsAvailable}
         >
+          <RocketOutlined />
           Import All
         </Button>
       ),
@@ -159,19 +164,19 @@ class FimsPeriodTable extends React.Component {
             ghost={true}
             size="small"
             // shape="square"
-            icon="rocket"
             onClick={() => {
               this.props.importFimsPeriod(rec.id);
             }}
             disabled={!this.props.fimsPeriodIsAvailable}
-          />
+          >
+            <RocketOutlined />
+          </Button>
           <Button
             style={{ margin: 5, marginRight: 20 }}
             type="danger"
             ghost={true}
             size="small"
             shape="circle"
-            icon="delete"
             onClick={() => {
               this.showRemoveFimsPeriodConfirm(
                 rec,
@@ -179,7 +184,9 @@ class FimsPeriodTable extends React.Component {
               );
             }}
             disabled={!this.props.fimsPeriodIsAvailable}
-          />
+          >
+            <DeleteOutlined />
+          </Button>
         </Row>
       ),
     },

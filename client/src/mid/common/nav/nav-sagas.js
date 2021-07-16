@@ -18,10 +18,10 @@ function* watchNavigation() {
 function* watchAuthentication() {
   while (true) {
     yield take(authActions.SIGN_IN_FULFILLED);
-    const module = Cookies.get("last-nav");
-    if (module) {
-      yield put(push(module));
-    }
+    // const module = Cookies.get("last-nav");
+    // if (module) {
+    //   yield put(push(module));
+    // }
   }
 }
 

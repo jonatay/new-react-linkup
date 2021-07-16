@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import FimsPeriodTable from "../fims-period-table";
 
 import { Upload, Button, Row, Col } from "antd";
-import Icon from "@ant-design/icons";
+import { InboxOutlined } from "@ant-design/icons";
 const Dragger = Upload.Dragger;
 
 const inclCsvCols = [
@@ -147,7 +147,7 @@ class FimsImport extends React.Component {
             disabled={!this.props.fimsPeriodIsAvailable}
           >
             <p className="ant-upload-drag-icon">
-              <Icon type="inbox" />
+              <InboxOutlined />
             </p>
             <p className="ant-upload-text">
               Click or drag file to this area to upload

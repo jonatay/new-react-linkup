@@ -1,15 +1,14 @@
 const settingsConfig = {
 	layout: {
-		style: 'layoutLinkup', // layout-1 layout-2 layout-3
+		style: 'layout2', // layout1 layout2 layout3
 		config: {} // checkout default layout configs at app/fuse-layouts for example  app/fuse-layouts/layout1/Layout1Config.js
 	},
-	customScrollbars: false,
-	animations: true,
+	customScrollbars: true,
 	direction: 'ltr', // rtl, ltr
 	theme: {
-		main: 'dark12',
-		navbar: 'mainThemeDark',
-		toolbar: 'mainThemeDark',
+		main: 'dark9',
+		navbar: 'dark9',
+		toolbar: 'mainThemeLight',
 		footer: 'mainThemeDark'
 	}
 };

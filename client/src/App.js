@@ -1,4 +1,5 @@
 import "./App.css";
+import React, { Suspense } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
@@ -20,6 +21,7 @@ import {
 } from "./mid/common";
 
 import { Layout } from "antd";
+import ErrorBoundary from "./views/components/common/error-boundry";
 const { Content } = Layout;
 
 const App = ({
@@ -33,53 +35,61 @@ const App = ({
 }) => {
   if (!authenticated)
     return (
-      <Layout>
-        <Content>
-          <Switch>
-            {serviceRoutes.map((route, idx) => (
-              <RequireUnauthRoute
-                key={idx}
-                path={route.path}
-                component={route.component}
-                {...authenticated}
+      <Suspense fallback={<div>Loading...</div>}>
+        <Layout>
+          <Content>
+            <Switch>
+              {serviceRoutes.map((route, idx) => (
+                <RequireUnauthRoute
+                  key={idx}
+                  path={route.path}
+                  component={route.component}
+                  {...authenticated}
+                />
+              ))}
+              <Redirect
+                to={{
+                  pathname: "/sign-in",
+                  state: { from: location },
+                }}
               />
-            ))}
-            <Redirect
-              to={{
-                pathname: "/sign-in",
-                state: { from: location },
-              }}
-            />
-          </Switch>
-        </Content>
-      </Layout>
+            </Switch>
+          </Content>
+        </Layout>
+      </Suspense>
     );
   return (
-    <Layout style={{ height: "inherit" }}>
-      <AppHeader
-        authenticated={authenticated}
-        signOut={signOut}
-        photoURL={photoURL}
-        navigateTo={navigateTo}
-        aclFront={aclFront}
-        currentNavPath={currentNavPath}
-      />
-      <Content style={{ padding: "0 10px", marginTop: 60 }}>
-        <div style={{ background: "#fff", padding: 5 }}>
-          <Switch>
-            {privateRoutes.map((route, idx) => (
-              <RequireAuthRoute
-                key={idx}
-                path={route.path}
-                component={route.component}
-                authenticated={authenticated}
-              />
-            ))}
-            <Route component={NoMatch} />
-          </Switch>
-        </div>
-      </Content>
-    </Layout>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Layout style={{ height: "inherit" }}>
+        <AppHeader
+          authenticated={authenticated}
+          signOut={signOut}
+          photoURL={photoURL}
+          navigateTo={navigateTo}
+          aclFront={aclFront}
+          currentNavPath={currentNavPath}
+        />
+
+        <Content style={{ padding: "0 10px", marginTop: 60 }}>
+          <div style={{ background: "#fff", padding: 5 }}>
+            <Switch>
+              <ErrorBoundary>
+                {privateRoutes.map((route, idx) => (
+                  <RequireAuthRoute
+                    key={idx}
+                    exact
+                    path={route.path}
+                    component={route.component}
+                    authenticated={authenticated}
+                  />
+                ))}
+              </ErrorBoundary>
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
+        </Content>
+      </Layout>
+    </Suspense>
   );
 };
 

@@ -1,84 +1,80 @@
-import asyncComponent from "../views/components/common/async-component";
+import React from "react";
 
-const AdminUsersPage = asyncComponent(() =>
-  import("../views/pages/admin/admin-users-page")
-);
-const AdminRightsPage = asyncComponent(() =>
-  import("../views/pages/admin/admin-rights-page")
-);
-const FleetDriversPage = asyncComponent(() =>
+// const AdminUsersPage = React.lazy(() =>
+//   import("../views/pages/admin/admin-users-page")
+// );
+// const AdminRightsPage = React.lazy(() =>
+//   import("../views/pages/admin/admin-rights-page")
+// );
+const FleetDriversPage = React.lazy(() =>
   import("../views/pages/fleet/fleet-drivers-page")
 );
-const FleetVehiclesPage = asyncComponent(() =>
+const FleetVehiclesPage = React.lazy(() =>
   import("../views/pages/fleet/fleet-vehicles-page")
 );
-const FleetTransactionsPage = asyncComponent(() =>
+const FleetTransactionsPage = React.lazy(() =>
   import("../views/pages/fleet/fleet-transactions-page")
 );
-const FleetSettingsPage = asyncComponent(() =>
+const FleetSettingsPage = React.lazy(() =>
   import("../views/pages/fleet/fleet-settings-page")
 );
-const UserProfilePage = asyncComponent(() =>
-  import("../views/pages/common/user-profile-page")
-);
-const RootPage = asyncComponent(() =>
-  import("../views/pages/common/root-page")
-);
+// const UserProfilePage = React.lazy(() =>
+//   import("../views/pages/common/user-profile-page")
+// );
+const RootPage = React.lazy(() => import("../views/pages/common/root-page"));
 
-// sage PAY
-const BankAccountsPage = asyncComponent(() =>
-  import("../views/pages/sage-pay/bank-accounts-page")
-);
+// // sage PAY
+// const BankAccountsPage = React.lazy(() =>
+//   import("../views/pages/sage-pay/bank-accounts-page")
+// );
 
-const BanksAndBranchesPage = asyncComponent(() =>
-  import("../views/pages/sage-pay/banks-and-branches-page")
-);
+// const BanksAndBranchesPage = React.lazy(() =>
+//   import("../views/pages/sage-pay/banks-and-branches-page")
+// );
 
-const SalaryBatchesPage = asyncComponent(() =>
-  import("../views/pages/sage-pay/salary-batches-page")
-);
+// const SalaryBatchesPage = React.lazy(() =>
+//   import("../views/pages/sage-pay/salary-batches-page")
+// );
 
-// sage ONE
-const SOBankAccountsPage = asyncComponent(() =>
-  import("../views/pages/sage-one/so-bank-accounts-page")
-);
+// // sage ONE
+// const SOBankAccountsPage = React.lazy(() =>
+//   import("../views/pages/sage-one/so-bank-accounts-page")
+// );
 
-// Attend
-const AttendPage = asyncComponent(() =>
-  import("../views/pages/attend/attend-page")
-);
+// // Attend
+// const AttendPage = React.lazy(() =>
+//   import("../views/pages/attend/attend-page")
+// );
 
-const HomePage = asyncComponent(() =>
-  import("../views/pages/common/user-home")
-);
+const HomePage = React.lazy(() => import("../views/pages/common/user-home"));
 
-const Emp501Page = asyncComponent(() => import("../views/pages/hr/emp501"));
+// const Emp501Page = React.lazy(() => import("../views/pages/hr/emp501"));
 
-const EmployeesPage = asyncComponent(() =>
-  import("../views/pages/hr/employee")
-);
+// const EmployeesPage = React.lazy(() =>
+//   import("../views/pages/hr/employee")
+// );
 
 export const privateRoutes = [
-  { path: "/admin/users", component: AdminUsersPage },
-  { path: "/admin/rights", component: AdminRightsPage },
+  // { path: "/admin/users", component: AdminUsersPage },
+  // { path: "/admin/rights", component: AdminRightsPage },
   { path: "/fleet/drivers", component: FleetDriversPage },
   { path: "/fleet/vehicles", component: FleetVehiclesPage },
   { path: "/fleet/transactions", component: FleetTransactionsPage },
   { path: "/fleet/settings", component: FleetSettingsPage },
 
-  { path: "/sage-pay/bank-accounts", component: BankAccountsPage },
-  { path: "/sage-pay/banks-and-branches", component: BanksAndBranchesPage },
-  { path: "/sage-pay/salary-batches", component: SalaryBatchesPage },
+  // { path: "/sage-pay/bank-accounts", component: BankAccountsPage },
+  // { path: "/sage-pay/banks-and-branches", component: BanksAndBranchesPage },
+  // { path: "/sage-pay/salary-batches", component: SalaryBatchesPage },
 
-  { path: "/sage-one/bank-accounts", component: SOBankAccountsPage },
+  // { path: "/sage-one/bank-accounts", component: SOBankAccountsPage },
 
-  { path: "/attend/attend", component: AttendPage },
+  // { path: "/attend/attend", component: AttendPage },
 
-  { path: "/hr/attendance", component: AttendPage },
-  { path: "/user-profile", component: UserProfilePage },
+  // { path: "/hr/attendance", component: AttendPage },
+  // { path: "/user-profile", component: UserProfilePage },
 
-  { path: "/hr/emp501", component: Emp501Page },
-  { path: "/hr/employees", component: EmployeesPage },
+  // { path: "/hr/emp501", component: Emp501Page },
+  // { path: "/hr/employees", component: EmployeesPage },
 
   { path: "/home", component: HomePage },
   { path: "/", component: RootPage },

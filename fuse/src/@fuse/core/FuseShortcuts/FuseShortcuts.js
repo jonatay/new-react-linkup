@@ -1,5 +1,3 @@
-import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import FuseUtils from '@fuse/utils';
 import { amber } from '@material-ui/core/colors';
 import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
@@ -12,12 +10,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import { selectFlatNavigation } from 'app/store/fuse/navigationSlice';
 import clsx from 'clsx';
-import React, { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { memo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { updateUserShortcuts } from 'app/auth/store/userSlice';
-import { selectNavigation } from 'app/store/fuse/navigationSlice';
 
 const useStyles = makeStyles({
 	root: {
@@ -38,23 +37,14 @@ const useStyles = makeStyles({
 function FuseShortcuts(props) {
 	const dispatch = useDispatch();
 	const shortcuts = useSelector(({ auth }) => auth.user.data.shortcuts);
-	const navigationData = useSelector(selectNavigation);
+	const navigation = useSelector(selectFlatNavigation);
 
 	const classes = useStyles(props);
 	const searchInputRef = useRef(null);
 	const [addMenu, setAddMenu] = useState(null);
 	const [searchText, setSearchText] = useState('');
 	const [searchResults, setSearchResults] = useState(null);
-	const [navigation, setNavigation] = useState(null);
-	const shortcutItems = shortcuts ? shortcuts.map(id => FuseUtils.findById(navigationData, id)) : [];
-
-	useEffect(() => {
-		function flattenNavigation() {
-			setNavigation(FuseUtils.getFlatNavigation(navigationData));
-		}
-
-		flattenNavigation();
-	}, [props.location, navigationData]);
+	const shortcutItems = shortcuts ? shortcuts.map(id => navigation.find(item => item.id === id)) : [];
 
 	function addMenuClick(event) {
 		setAddMenu(event.currentTarget);
@@ -90,7 +80,7 @@ function FuseShortcuts(props) {
 						{item.icon ? (
 							<Icon>{item.icon}</Icon>
 						) : (
-							<span className="text-20 font-bold uppercase text-center">{item.title[0]}</span>
+							<span className="text-20 font-semibold uppercase text-center">{item.title[0]}</span>
 						)}
 					</ListItemIcon>
 					<ListItemText primary={item.title} />
@@ -107,6 +97,18 @@ function FuseShortcuts(props) {
 			</Link>
 		);
 	}
+	const container = {
+		show: {
+			transition: {
+				staggerChildren: 0.1
+			}
+		}
+	};
+
+	const item = {
+		hidden: { opacity: 0, scale: 0.6 },
+		show: { opacity: 1, scale: 1 }
+	};
 
 	return (
 		<div
@@ -118,25 +120,25 @@ function FuseShortcuts(props) {
 				props.className
 			)}
 		>
-			<FuseAnimateGroup
-				enter={{
-					animation: 'transition.expandIn'
-				}}
+			<motion.div
+				variants={container}
+				initial="hidden"
+				animate="show"
 				className={clsx('flex flex-1', props.variant === 'vertical' && 'flex-col')}
 			>
 				{shortcutItems.map(
-					item =>
-						item && (
-							<Link to={item.url} key={item.id} className={classes.item} role="button">
+					_item =>
+						_item && (
+							<Link to={_item.url} key={_item.id} className={classes.item} role="button">
 								<Tooltip
-									title={item.title}
+									title={_item.title}
 									placement={props.variant === 'horizontal' ? 'bottom' : 'left'}
 								>
-									<IconButton className="w-40 h-40 p-0">
-										{item.icon ? (
-											<Icon>{item.icon}</Icon>
+									<IconButton className="w-40 h-40 p-0" component={motion.div} variants={item}>
+										{_item.icon ? (
+											<Icon>{_item.icon}</Icon>
 										) : (
-											<span className="text-20 font-bold uppercase">{item.title[0]}</span>
+											<span className="text-20 font-semibold uppercase">{_item.title[0]}</span>
 										)}
 									</IconButton>
 								</Tooltip>
@@ -149,6 +151,8 @@ function FuseShortcuts(props) {
 					placement={props.variant === 'horizontal' ? 'bottom' : 'left'}
 				>
 					<IconButton
+						component={motion.div}
+						variants={item}
 						className="w-40 h-40 p-0"
 						aria-owns={addMenu ? 'add-menu' : null}
 						aria-haspopup="true"
@@ -157,7 +161,7 @@ function FuseShortcuts(props) {
 						<Icon className={classes.addIcon}>star</Icon>
 					</IconButton>
 				</Tooltip>
-			</FuseAnimateGroup>
+			</motion.div>
 
 			<Menu
 				id="add-menu"
@@ -165,7 +169,7 @@ function FuseShortcuts(props) {
 				open={Boolean(addMenu)}
 				onClose={addMenuClose}
 				classes={{
-					paper: 'mt-48'
+					paper: 'mt-48 min-w-256'
 				}}
 				onEntered={() => {
 					searchInputRef.current.focus();
@@ -185,6 +189,7 @@ function FuseShortcuts(props) {
 						inputProps={{
 							'aria-label': 'Search'
 						}}
+						disableUnderline
 					/>
 				</div>
 
@@ -192,8 +197,8 @@ function FuseShortcuts(props) {
 
 				{searchText.length !== 0 &&
 					searchResults &&
-					searchResults.map(item => (
-						<ShortcutMenuItem key={item.id} item={item} onToggle={() => toggleInShortcuts(item.id)} />
+					searchResults.map(_item => (
+						<ShortcutMenuItem key={_item.id} item={_item} onToggle={() => toggleInShortcuts(_item.id)} />
 					))}
 
 				{searchText.length !== 0 && searchResults.length === 0 && (
@@ -204,12 +209,12 @@ function FuseShortcuts(props) {
 
 				{searchText.length === 0 &&
 					shortcutItems.map(
-						item =>
-							item && (
+						_item =>
+							_item && (
 								<ShortcutMenuItem
-									key={item.id}
-									item={item}
-									onToggle={() => toggleInShortcuts(item.id)}
+									key={_item.id}
+									item={_item}
+									onToggle={() => toggleInShortcuts(_item.id)}
 								/>
 							)
 					)}
@@ -223,4 +228,4 @@ FuseShortcuts.defaultProps = {
 	variant: 'horizontal'
 };
 
-export default React.memo(FuseShortcuts);
+export default memo(FuseShortcuts);

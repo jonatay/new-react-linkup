@@ -6,7 +6,7 @@ import { emphasize } from '@material-ui/core/styles/colorManipulator';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import React from 'react';
+import { memo } from 'react';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
@@ -46,7 +46,8 @@ const useStyles = makeStyles(theme => ({
 	input: {
 		display: 'flex',
 		padding: 0,
-		height: 'auto'
+		height: 'auto',
+		minHeight: 56
 	},
 	valueContainer: {
 		display: 'flex',
@@ -229,4 +230,4 @@ function FuseChipSelect(props) {
 	);
 }
 
-export default React.memo(FuseChipSelect);
+export default memo(FuseChipSelect);

@@ -7,7 +7,7 @@ import configureStore, { history } from "./configureStore";
 import { ConnectedRouter } from "connected-react-router";
 import { initAuth } from "./mid/common/auth";
 
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 import "./index.css";
 
 const initialState = {};

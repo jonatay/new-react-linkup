@@ -9,7 +9,6 @@ import qs from 'qs';
  */
 export const defaultSettings = {
 	customScrollbars: true,
-	animations: true,
 	direction: 'ltr',
 	theme: {
 		main: 'default',
@@ -39,23 +38,77 @@ export function getParsedQuerySettings() {
  */
 export const defaultThemeOptions = {
 	typography: {
-		fontFamily: ['Muli', 'Roboto', '"Helvetica"', 'Arial', 'sans-serif'].join(','),
+		fontFamily: ['Poppins', 'Roboto', '"Helvetica"', 'Arial', 'sans-serif'].join(','),
 		fontWeightLight: 300,
 		fontWeightRegular: 400,
-		fontWeightMedium: 600,
+		fontWeightMedium: 500,
 		useNextVariants: true,
 		suppressDeprecationWarnings: true
+	},
+	overrides: {
+		MuiButton: {
+			root: {
+				textTransform: 'none',
+				borderRadius: '18px'
+			},
+			sizeSmall: {
+				borderRadius: '15px'
+			},
+			sizeLarge: {
+				borderRadius: '21px'
+			},
+			contained: {
+				boxShadow: 'none',
+				'&:hover, &:focus': {
+					boxShadow: 'none'
+				}
+			}
+		},
+		MuiTab: {
+			root: {
+				textTransform: 'none'
+			}
+		},
+		// MuiMenu: {
+		// 	paper: {
+		// 		borderRadius: 12
+		// 	}
+		// },
+		MuiDialog: {
+			paper: {
+				borderRadius: 16
+			}
+		},
+		MuiPaper: {
+			rounded: {
+				borderRadius: 16
+			}
+		},
+		MuiPopover: {
+			paper: {
+				borderRadius: 8
+			}
+		},
+		MuiFilledInput: {
+			root: {
+				borderRadius: 4,
+				'&:before, &:after': {
+					display: 'none'
+				}
+			}
+		}
 	}
 };
 
 export const mustHaveThemeOptions = {
 	typography: {
 		htmlFontSize: 10,
+		fontSize: 13,
 		body1: {
-			fontSize: '1.4rem'
+			fontSize: '1.3rem'
 		},
 		body2: {
-			fontSize: '1.4rem'
+			fontSize: '1.3rem'
 		}
 	}
 };
@@ -132,6 +185,11 @@ export function mainThemeVariations(theme) {
 				background: {
 					paper: '#1E2125',
 					default: '#121212'
+				},
+				text: {
+					primary: 'rgb(255,255,255)',
+					secondary: 'rgb(229, 231, 235)',
+					disabled: 'rgb(156, 163, 175)'
 				}
 			}
 		}),
@@ -141,6 +199,11 @@ export function mainThemeVariations(theme) {
 				background: {
 					paper: '#FFFFFF',
 					default: '#F7F7F7'
+				},
+				text: {
+					primary: 'rgb(17, 24, 39)',
+					secondary: 'rgb(107, 114, 128)',
+					disabled: 'rgb(149, 156, 169)'
 				}
 			}
 		})

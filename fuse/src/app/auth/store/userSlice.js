@@ -1,3 +1,4 @@
+/* eslint import/no-extraneous-dependencies: off*/
 import { createSlice } from '@reduxjs/toolkit';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -69,6 +70,7 @@ export const createUserSettingsFirebase = authUser => async (dispatch, getState)
 	return dispatch(setUserData(user));
 };
 
+// eslint-disable-next-line
 export const setUserData = user => async (dispatch, getState) => {
 	/*
         You can redirect the logged-in user to a specific route depending on his role
@@ -141,6 +143,7 @@ export const logoutUser = () => async (dispatch, getState) => {
 	return dispatch(userLoggedOut());
 };
 
+// eslint-disable-next-line
 export const updateUserData = user => async (dispatch, getState) => {
 	if (!user.role || user.role.length === 0) {
 		// is guest
@@ -188,22 +191,20 @@ export const updateUserData = user => async (dispatch, getState) => {
 
 const initialState = {
 	role: [], // guest
-	data: {}
-};
-/*
-{
-		displayName: 'Jonathan Taylor',
-		photoURL: null,
-		email: 'jono@linkupsecurity.co.za',
-		shortcuts: []
+	data: {
+		displayName: 'John Doe',
+		photoURL: 'assets/images/avatars/Velazquez.jpg',
+		email: 'johndoe@withinpixels.com',
+		shortcuts: ['calendar', 'mail', 'contacts', 'todo']
 	}
-*/
+};
 
 const userSlice = createSlice({
 	name: 'auth/user',
 	initialState,
 	reducers: {
 		setUser: (state, action) => action.payload,
+		// eslint-disable-next-line
 		userLoggedOut: (state, action) => initialState
 	},
 	extraReducers: {}

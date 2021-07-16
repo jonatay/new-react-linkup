@@ -1,8 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Layout, Menu, Avatar } from "antd";
-import Icon from "@ant-design/icons";
+import {
+  ContainerTwoTone,
+  WalletTwoTone,
+  CalendarTwoTone,
+  PictureTwoTone,
+  LockTwoTone,
+  UserOutlined,
+  ClockCircleTwoTone,
+  SettingTwoTone,
+  CloudTwoTone,
+  ReconciliationTwoTone,
+  CreditCardTwoTone,
+  ShopTwoTone,
+  SolutionOutlined,
+  ClockCircleOutlined,
+  ShopOutlined,
+  DollarOutlined,
+} from "@ant-design/icons";
+
+import EmojiTransportationTwoToneIcon from "@material-ui/icons/EmojiTransportationTwoTone";
+
 import "./header.css";
+import {
+  AirlineSeatReclineNormalTwoTone,
+  RecentActorsTwoTone,
+  SettingsApplicationsTwoTone,
+  EmojiTransportationTwoTone,
+  CommuteTwoTone,
+  ReceiptTwoTone,
+  ContactsTwoTone,
+} from "@material-ui/icons";
 
 const SubMenu = Menu.SubMenu;
 
@@ -16,28 +45,29 @@ const idxCheat = {
 };
 
 const iconCheat = {
-  Admin: "tool",
-  Fleet: "car",
-  HR: "team",
-  Drivers: "idcard",
-  Vehicles: "car",
-  Transactions: "table",
-  Employees: "contacts",
-  EmpTran: "table",
-  Advances: "wallet",
-  Shifts: "calendar",
-  Leave: "smile-o",
-  Rights: "lock",
-  Users: "user",
-  Attendance: "clock-circle-o",
-  Settings: "setting",
-  "sage-pay": "cloud-upload-o",
-  "sage-one": "audit",
-  "bank-accounts": "credit-card",
-  "banks-and-branches": "shop",
-  "salary-batches": "solution",
-  Attend: "clock-circle-o",
-  Emp501: "shop",
+  Admin: <SettingsApplicationsTwoTone />,
+  Fleet: <EmojiTransportationTwoTone />,
+  HR: <RecentActorsTwoTone />,
+  Drivers: <AirlineSeatReclineNormalTwoTone />,
+  Vehicles: <CommuteTwoTone />,
+  Transactions: <ReceiptTwoTone />,
+  Employees: <ContactsTwoTone />,
+  EmpTran: <ContainerTwoTone />,
+  Advances: <WalletTwoTone />,
+  Shifts: <CalendarTwoTone />,
+  Leave: <PictureTwoTone />,
+  Rights: <LockTwoTone />,
+  Users: <UserOutlined />,
+  Attendance: <ClockCircleTwoTone />,
+  Settings: <SettingTwoTone />,
+  "sage-pay": <CloudTwoTone />,
+  "sage-one": <ReconciliationTwoTone />,
+  "bank-accounts": <CreditCardTwoTone />,
+  "banks-and-branches": <ShopTwoTone />,
+  "salary-batches": <SolutionOutlined />,
+  Attend: <ClockCircleOutlined />,
+  Emp501: <ShopOutlined />,
+  "bank-transactions": <DollarOutlined />,
 };
 
 const { Header } = Layout;
@@ -67,7 +97,8 @@ const AppHeader = ({
         key={`${parent.toLowerCase()}/${child.resource.toLowerCase()}`}
       >
         <span>
-          <Icon type={iconCheat[child.resource]} />
+          {/* <Icon type={iconCheat[child.resource]} /> */}
+          {iconCheat[child.resource] ? iconCheat[child.resource] : ""}
         </span>
         {child.label}
       </Menu.Item>
@@ -90,14 +121,11 @@ const AppHeader = ({
         style={{
           width: 70,
           height: 31,
-          // background: 'rgba(255,255,255,.2)',
-          // margin: '16px 24px 16px 0',
-          // marginTop:5,
           cursor: "pointer",
           float: "left",
         }}
       >
-        <img src="/img/LULogoBar2.png" alt="" />
+        <img src="/img/LULogoBar2.png" alt="" style={{ width: 70 }} />
       </div>
       <Menu
         onClick={handleMenuClick}
@@ -116,7 +144,9 @@ const AppHeader = ({
             photoURL ? (
               <Avatar src={photoURL} shape="square" />
             ) : (
-              <Avatar style={{ paddingLeft: 7 }} icon="user" />
+              <Avatar style={{ paddingLeft: 7 }}>
+                <UserOutlined />
+              </Avatar>
             )
           }
         >
@@ -138,7 +168,7 @@ const AppHeader = ({
               key={menu.resource.toLowerCase()}
               title={
                 <span>
-                  <Icon type={iconCheat[menu.resource]} />
+                  {iconCheat[menu.resource] ? iconCheat[menu.resource] : ""}
                   {menu.label}
                 </span>
               }
