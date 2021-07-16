@@ -1,11 +1,11 @@
-import React from 'react';
+import { memo } from 'react';
 
 function FuseSplashScreen() {
 	return (
 		<div id="fuse-splash-screen">
 			<div className="center">
 				<div className="logo">
-					<img width="128" src="assets/images/logos/fuse.svg" alt="logo" />
+					<img width="128" src="assets/images/link-up/link-up-logo.svg" alt="logo" />
 				</div>
 				<div className="spinner-wrapper">
 					<div className="spinner">
@@ -25,4 +25,4 @@ function FuseSplashScreen() {
 	);
 }
 
-export default React.memo(FuseSplashScreen);
+export default memo(FuseSplashScreen);

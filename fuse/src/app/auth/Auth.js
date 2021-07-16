@@ -2,7 +2,7 @@ import FuseSplashScreen from '@fuse/core/FuseSplashScreen';
 import auth0Service from 'app/services/auth0Service';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
@@ -17,7 +17,7 @@ class Auth extends Component {
 	componentDidMount() {
 		return Promise.all([
 			// Comment the lines which you do not use
-			// this.firebaseCheck(),
+			this.firebaseCheck()
 			// this.auth0Check(),
 			// this.jwtCheck()
 		]).then(() => {
@@ -117,9 +117,17 @@ class Auth extends Component {
 
 							resolve();
 
-							this.props.showMessage({ message: 'Logged in with Firebase' });
+							this.props.showMessage({
+								message: 'Logged in with Firebase',
+								variant: 'success',
+								anchorOrigin: {
+									vertical: 'top',
+									horizontal: 'right'
+								},
+								autoHideDuration: 1000
+							});
 						},
-						error => {
+						() => {
 							resolve();
 						}
 					);

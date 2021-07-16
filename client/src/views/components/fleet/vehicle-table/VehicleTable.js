@@ -7,6 +7,7 @@ import React from "react";
 import { Table, Tag, Button, Modal } from "antd";
 
 import "./style.css";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 
 class VehicleTable extends React.Component {
   state = {
@@ -88,23 +89,25 @@ class VehicleTable extends React.Component {
             ghost={true}
             size="small"
             shape="circle"
-            icon="edit"
             onClick={() => this.props.onEditVehicle(record)}
-          />
+          >
+            <EditOutlined />
+          </Button>
           <Button
             style={{ marginLeft: 5 }}
             type={record.is_active ? "danger" : "primary"}
             ghost={true}
             size="small"
             shape="circle"
-            icon={record.is_active ? "delete" : "plus-circle-o"}
             onClick={() =>
               this.showToggleVehicleActiveConfirm(
                 record,
                 this.props.toggleVehicleIsActive
               )
             }
-          />
+          >
+            {record.is_active ? <DeleteOutlined /> : <PlusOutlined />}
+          </Button>
         </span>
       ),
     },

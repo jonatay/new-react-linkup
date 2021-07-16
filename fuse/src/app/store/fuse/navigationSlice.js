@@ -38,9 +38,23 @@ export const {
 	selectById: selectNavigationItemById
 } = navigationAdapter.getSelectors(state => state.fuse.navigation);
 
+const navigationSlice = createSlice({
+	name: 'navigation',
+	initialState,
+	reducers: {
+		setNavigation: navigationAdapter.setAll,
+		// eslint-disable-next-line
+		resetNavigation: (state, action) => initialState
+	}
+});
+
+export const { setNavigation, resetNavigation } = navigationSlice.actions;
+
+const getUserRole = state => state.auth.user.role;
+
 export const selectNavigation = createSelector(
-	[selectNavigationAll, ({ i18n }) => i18n.language],
-	(navigation, language) => {
+	[selectNavigationAll, ({ i18n }) => i18n.language, getUserRole],
+	(navigation, language, userRole) => {
 		function setTranslationValues(data) {
 			// loop through every object in the array
 			return data.map(item => {
@@ -57,19 +71,17 @@ export const selectNavigation = createSelector(
 			});
 		}
 
-		return setTranslationValues(_.merge([], navigation));
+		return setTranslationValues(
+			_.merge(
+				[],
+				FuseUtils.filterRecursive(navigation, item => FuseUtils.hasPermission(item.auth, userRole))
+			)
+		);
 	}
 );
 
-const navigationSlice = createSlice({
-	name: 'navigation',
-	initialState,
-	reducers: {
-		setNavigation: navigationAdapter.setAll,
-		resetNavigation: (state, action) => initialState
-	}
-});
-
-export const { setNavigation, resetNavigation } = navigationSlice.actions;
+export const selectFlatNavigation = createSelector([selectNavigation], navigation =>
+	FuseUtils.getFlatNavigation(navigation)
+);
 
 export default navigationSlice.reducer;

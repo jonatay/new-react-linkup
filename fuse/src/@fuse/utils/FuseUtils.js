@@ -309,7 +309,7 @@ class FuseUtils {
 		return nav.map(_item => {
 			if (_item.id === parentId && _item.children) {
 				return {
-					_item,
+					..._item,
 					children: [..._item.children, item]
 				};
 			}
@@ -356,6 +356,32 @@ class FuseUtils {
             Check if user role is string,
             */
 		return authArr.includes(userRole);
+	}
+
+	static filterRecursive(data, predicate) {
+		// if no data is sent in, return null, otherwise transform the data
+		return !data
+			? null
+			: data.reduce((list, entry) => {
+					let clone = null;
+					if (predicate(entry)) {
+						// if the object matches the filter, clone it as it is
+						clone = { ...entry };
+					}
+					if (entry.children != null) {
+						// if the object has childrens, filter the list of children
+						const children = this.filterRecursive(entry.children, predicate);
+						if (children.length > 0) {
+							// if any of the children matches, clone the parent object, overwrite
+							// the children list with the filtered list
+							clone = { ...entry, children };
+						}
+					}
+
+					// if there's a cloned object, push it to the output list
+					clone && list.push(clone);
+					return list;
+			  }, []);
 	}
 }
 

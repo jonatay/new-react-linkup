@@ -1,6 +1,7 @@
-import React from 'react';
 import QuickPanel from 'app/fuse-layouts/shared-components/quickPanel/QuickPanel';
+import { memo } from 'react';
 
+// eslint-disable-next-line
 function RightSideLayout1(props) {
 	return (
 		<>
@@ -9,4 +10,4 @@ function RightSideLayout1(props) {
 	);
 }
 
-export default React.memo(RightSideLayout1);
+export default memo(RightSideLayout1);

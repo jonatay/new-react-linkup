@@ -1,5 +1,9 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import { useForm } from '@fuse/hooks';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { motion } from 'framer-motion';
+import { Controller, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitLoginWithFireBase } from 'app/auth/store/loginSlice';
+
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,96 +12,122 @@ import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
-import { darken } from '@material-ui/core/styles/colorManipulator';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import React from 'react';
 import { Link } from 'react-router-dom';
+import * as yup from 'yup';
+import _ from '@lodash';
 
 const useStyles = makeStyles(theme => ({
-	root: {
-		background: `radial-gradient(${darken(theme.palette.primary.dark, 0.5)} 0%, ${theme.palette.primary.dark} 80%)`,
-		color: theme.palette.primary.contrastText
-	}
+	root: {}
 }));
+
+/**
+ * Form Validation Schema
+ */
+const schema = yup.object().shape({
+	email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+	password: yup
+		.string()
+		.required('Please enter your password.')
+		.min(8, 'Password is too short - should be 8 chars minimum.')
+});
+
+const defaultValues = {
+	email: '',
+	password: '',
+	remember: true
+};
 
 function LoginPage() {
 	const classes = useStyles();
 
-	const { form, handleChange, resetForm } = useForm({
-		email: '',
-		password: '',
-		remember: true
+	const dispatch = useDispatch();
+	const login = useSelector(({ auth }) => auth.login);
+
+	const { control, formState, handleSubmit, reset } = useForm({
+		mode: 'onChange',
+		defaultValues,
+		resolver: yupResolver(schema)
 	});
 
-	function isFormValid() {
-		return form.email.length > 0 && form.password.length > 0;
-	}
+	const { isValid, dirtyFields, errors } = formState;
 
-	function handleSubmit(ev) {
-		ev.preventDefault();
-		resetForm();
+	function onSubmit(model) {
+		dispatch(submitLoginWithFireBase(model));
 	}
 
 	return (
-		<div className={clsx(classes.root, 'flex flex-col flex-auto flex-shrink-0 items-center justify-center p-32')}>
+		<div className={clsx(classes.root, 'flex flex-col flex-auto items-center justify-center p-16 sm:p-32')}>
 			<div className="flex flex-col items-center justify-center w-full">
-				<FuseAnimate animation="transition.expandIn">
-					<Card className="w-full max-w-384 rounded-8">
-						<CardContent className="flex flex-col items-center justify-center p-32">
-							<img className="w-128 m-32" src="assets/images/logos/fuse.svg" alt="logo" />
+				<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }}>
+					<Card className="w-full max-w-384">
+						<CardContent className="flex flex-col items-center justify-center p-16 sm:p-24 md:p-32">
+							<img className="w-128 m-32" src="assets/images/link-up/link-up-logo.svg" alt="logo" />
 
-							<Typography variant="h6" className="mt-16 mb-32">
-								LOGIN TO YOUR ACCOUNT
+							<Typography variant="h6" className="mt-16 mb-24 font-semibold text-18 sm:text-24">
+								Login to your account
 							</Typography>
 
 							<form
 								name="loginForm"
 								noValidate
 								className="flex flex-col justify-center w-full"
-								onSubmit={handleSubmit}
+								onSubmit={handleSubmit(onSubmit)}
 							>
-								<TextField
-									className="mb-16"
-									label="Email"
-									autoFocus
-									type="email"
+								<Controller
 									name="email"
-									value={form.email}
-									onChange={handleChange}
-									variant="outlined"
-									required
-									fullWidth
-								/>
-
-								<TextField
-									className="mb-16"
-									label="Password"
-									type="password"
-									name="password"
-									value={form.password}
-									onChange={handleChange}
-									variant="outlined"
-									required
-									fullWidth
-								/>
-
-								<div className="flex items-center justify-between">
-									<FormControl>
-										<FormControlLabel
-											control={
-												<Checkbox
-													name="remember"
-													checked={form.remember}
-													onChange={handleChange}
-												/>
-											}
-											label="Remember Me"
+									control={control}
+									render={({ field }) => (
+										<TextField
+											{...field}
+											className="mb-16"
+											label="Email"
+											autoFocus
+											type="email"
+											error={!!errors.email}
+											helperText={errors?.email?.message}
+											variant="outlined"
+											required
+											fullWidth
 										/>
-									</FormControl>
+									)}
+								/>
 
-									<Link className="font-medium" to="/pages/auth/forgot-password">
+								<Controller
+									name="password"
+									control={control}
+									render={({ field }) => (
+										<TextField
+											{...field}
+											className="mb-16"
+											label="Password"
+											type="password"
+											error={!!errors.password}
+											helperText={errors?.password?.message}
+											variant="outlined"
+											required
+											fullWidth
+										/>
+									)}
+								/>
+
+								<div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
+									<Controller
+										name="remember"
+										control={control}
+										render={({ field }) => (
+											<FormControl>
+												<FormControlLabel
+													label="Remember Me"
+													control={<Checkbox {...field} />}
+												/>
+											</FormControl>
+										)}
+									/>
+
+									<Link className="font-normal" to="/pages/auth/forgot-password">
 										Forgot Password?
 									</Link>
 								</div>
@@ -107,41 +137,36 @@ function LoginPage() {
 									color="primary"
 									className="w-224 mx-auto mt-16"
 									aria-label="LOG IN"
-									disabled={!isFormValid()}
+									disabled={_.isEmpty(dirtyFields) || !isValid}
 									type="submit"
 								>
-									LOGIN
+									Login
 								</Button>
 							</form>
 
 							<div className="my-24 flex items-center justify-center">
 								<Divider className="w-32" />
-								<span className="mx-8 font-bold">OR</span>
+								<span className="mx-8 font-semibold">OR</span>
 								<Divider className="w-32" />
 							</div>
 
-							<Button
-								variant="contained"
-								color="secondary"
-								size="small"
-								className="normal-case w-192 mb-8"
-							>
+							{/* <Button variant="contained" color="secondary" size="small" className="w-192 mb-8">
 								Log in with Google
 							</Button>
 
-							<Button variant="contained" color="primary" size="small" className="normal-case w-192">
+							<Button variant="contained" color="primary" size="small" className="w-192">
 								Log in with Facebook
-							</Button>
+							</Button> */}
 
 							<div className="flex flex-col items-center justify-center pt-32 pb-24">
-								<span className="font-medium">Don't have an account?</span>
-								<Link className="font-medium" to="/pages/auth/register">
+								<span className="font-normal">Don't have an account?</span>
+								<Link className="font-normal" to="/pages/auth/register">
 									Create an account
 								</Link>
 							</div>
 						</CardContent>
 					</Card>
-				</FuseAnimate>
+				</motion.div>
 			</div>
 		</div>
 	);

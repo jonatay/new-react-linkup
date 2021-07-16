@@ -1,3 +1,4 @@
+/* eslint import/no-extraneous-dependencies: off*/
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
@@ -28,6 +29,7 @@ class FirebaseService {
 		if (!firebase.apps.length) {
 			return false;
 		}
+		// eslint-disable-next-line
 		return new Promise((resolve, reject) => {
 			this.db
 				.ref(`users/${userId}`)

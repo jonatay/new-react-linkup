@@ -15,6 +15,7 @@ class JwtService extends FuseUtils.EventEmitter {
 				return response;
 			},
 			err => {
+				// eslint-disable-next-line
 				return new Promise((resolve, reject) => {
 					if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
 						// if you ever get an unauthorized response, logout the user
@@ -95,6 +96,7 @@ class JwtService extends FuseUtils.EventEmitter {
 						reject(new Error('Failed to login with token.'));
 					}
 				})
+				// eslint-disable-next-line
 				.catch(error => {
 					this.logout();
 					reject(new Error('Failed to login with token.'));

@@ -29,9 +29,7 @@ export function generateSettings(_defaultSettings, _newSettings) {
 	const response = _.merge(
 		{},
 		_defaultSettings,
-		_newSettings && _newSettings.layout && _newSettings.layout.style
-			? { layout: { config: FuseLayoutConfigs[_newSettings.layout.style].defaults } }
-			: {},
+		{ layout: { config: FuseLayoutConfigs[_newSettings?.layout?.style]?.defaults } },
 		_newSettings
 	);
 
@@ -79,10 +77,10 @@ export const selectMainTheme = createSelector([getThemes, getDirection, getMainT
 	generateMuiTheme(themes, id, direction)
 );
 
-export const selectMainThemeDark = createSelector([getThemes, getDirection], (themes, direction, id) =>
+export const selectMainThemeDark = createSelector([getThemes, getDirection], (themes, direction) =>
 	generateMuiTheme(themes, 'mainThemeDark', direction)
 );
-export const selectMainThemeLight = createSelector([getThemes, getDirection], (themes, direction, id) =>
+export const selectMainThemeLight = createSelector([getThemes, getDirection], (themes, direction) =>
 	generateMuiTheme(themes, 'mainThemeLight', direction)
 );
 
@@ -142,9 +140,10 @@ const settingsSlice = createSlice({
 				themes
 			};
 		},
-		setInitialSettings: (state, action) => {
+		setInitialSettings: () => {
 			return _.merge({}, initialState);
 		},
+		// eslint-disable-next-line
 		resetSettings: (state, action) => {
 			const themes = {
 				...state.themes,

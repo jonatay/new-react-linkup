@@ -5,7 +5,6 @@ const path = require("path");
 const favicon = require("serve-favicon");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
 const url = require("url");
 const http = require("http");
 // var index = require('./routes/index');
@@ -27,17 +26,17 @@ app.set("view engine", "pug");
 app.set("views", __dirname + "/views");
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, `${BUILD_DIR}/img`, "favicon.ico")));
+app.use(favicon(path.join(__dirname, `${BUILD_DIR}`, "favicon.ico")));
 // app.use(morgan('combined'));
 
 app.use(
-  bodyParser.json({
+  express.json({
     parameterLimit: 1000000,
     limit: "50mb",
   })
 );
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     parameterLimit: 1000000,
     limit: "50mb",
     extended: true,

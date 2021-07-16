@@ -6,15 +6,15 @@ import React from "react";
 // const AdminRightsPage = React.lazy(() =>
 //   import("../views/pages/admin/admin-rights-page")
 // );
-// const FleetDriversPage = React.lazy(() =>
-//   import("../views/pages/fleet/fleet-drivers-page")
-// );
-// const FleetVehiclesPage = React.lazy(() =>
-//   import("../views/pages/fleet/fleet-vehicles-page")
-// );
-// const FleetTransactionsPage = React.lazy(() =>
-//   import("../views/pages/fleet/fleet-transactions-page")
-// );
+const FleetDriversPage = React.lazy(() =>
+  import("../views/pages/fleet/fleet-drivers-page")
+);
+const FleetVehiclesPage = React.lazy(() =>
+  import("../views/pages/fleet/fleet-vehicles-page")
+);
+const FleetTransactionsPage = React.lazy(() =>
+  import("../views/pages/fleet/fleet-transactions-page")
+);
 const FleetSettingsPage = React.lazy(() =>
   import("../views/pages/fleet/fleet-settings-page")
 );
@@ -57,9 +57,9 @@ const HomePage = React.lazy(() => import("../views/pages/common/user-home"));
 export const privateRoutes = [
   // { path: "/admin/users", component: AdminUsersPage },
   // { path: "/admin/rights", component: AdminRightsPage },
-  // { path: "/fleet/drivers", component: FleetDriversPage },
-  // { path: "/fleet/vehicles", component: FleetVehiclesPage },
-  // { path: "/fleet/transactions", component: FleetTransactionsPage },
+  { path: "/fleet/drivers", component: FleetDriversPage },
+  { path: "/fleet/vehicles", component: FleetVehiclesPage },
+  { path: "/fleet/transactions", component: FleetTransactionsPage },
   { path: "/fleet/settings", component: FleetSettingsPage },
 
   // { path: "/sage-pay/bank-accounts", component: BankAccountsPage },

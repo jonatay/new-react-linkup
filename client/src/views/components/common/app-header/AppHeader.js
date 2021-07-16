@@ -2,12 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Layout, Menu, Avatar } from "antd";
 import {
-  ToolTwoTone,
-  CarTwoTone,
-  BulbTwoTone,
-  IdcardTwoTone,
-  DollarTwoTone,
-  ContactsTwoTone,
   ContainerTwoTone,
   WalletTwoTone,
   CalendarTwoTone,
@@ -17,7 +11,7 @@ import {
   ClockCircleTwoTone,
   SettingTwoTone,
   CloudTwoTone,
-  AuditOutlined,
+  ReconciliationTwoTone,
   CreditCardTwoTone,
   ShopTwoTone,
   SolutionOutlined,
@@ -26,7 +20,18 @@ import {
   DollarOutlined,
 } from "@ant-design/icons";
 
+import EmojiTransportationTwoToneIcon from "@material-ui/icons/EmojiTransportationTwoTone";
+
 import "./header.css";
+import {
+  AirlineSeatReclineNormalTwoTone,
+  RecentActorsTwoTone,
+  SettingsApplicationsTwoTone,
+  EmojiTransportationTwoTone,
+  CommuteTwoTone,
+  ReceiptTwoTone,
+  ContactsTwoTone,
+} from "@material-ui/icons";
 
 const SubMenu = Menu.SubMenu;
 
@@ -40,12 +45,12 @@ const idxCheat = {
 };
 
 const iconCheat = {
-  Admin: <ToolTwoTone />,
-  Fleet: <CarTwoTone />,
-  HR: <BulbTwoTone />,
-  Drivers: <IdcardTwoTone />,
-  Vehicles: <CarTwoTone />,
-  Transactions: <DollarTwoTone />,
+  Admin: <SettingsApplicationsTwoTone />,
+  Fleet: <EmojiTransportationTwoTone />,
+  HR: <RecentActorsTwoTone />,
+  Drivers: <AirlineSeatReclineNormalTwoTone />,
+  Vehicles: <CommuteTwoTone />,
+  Transactions: <ReceiptTwoTone />,
   Employees: <ContactsTwoTone />,
   EmpTran: <ContainerTwoTone />,
   Advances: <WalletTwoTone />,
@@ -56,7 +61,7 @@ const iconCheat = {
   Attendance: <ClockCircleTwoTone />,
   Settings: <SettingTwoTone />,
   "sage-pay": <CloudTwoTone />,
-  "sage-one": <AuditOutlined />,
+  "sage-one": <ReconciliationTwoTone />,
   "bank-accounts": <CreditCardTwoTone />,
   "banks-and-branches": <ShopTwoTone />,
   "salary-batches": <SolutionOutlined />,

@@ -13,6 +13,7 @@ const dialogSlice = createSlice({
 			state.state = true;
 			state.options = action.payload;
 		},
+		// eslint-disable-next-line
 		closeDialog: (state, action) => {
 			state.state = false;
 		}
