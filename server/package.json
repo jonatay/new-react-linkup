@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "set DEBUG=reactLinkup:* & nodemon ./bin/www",
-    "test": "mocha --watch",
+    "test": "env-cmd mocha ./test/**/*test.js -R spec --watch",
     "cypress:open": "cypress open"
   },
   "author": "",
@@ -38,5 +38,8 @@
     "request-promise": "^4.2.6",
     "serve-favicon": "^2.5.0",
     "strong-soap": "^3.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7"
   }
 }
