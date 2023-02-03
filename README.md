@@ -1,2 +1,4 @@
 #README
-WHatever...
+
+[The server/.env api's](./server/.env.md)
+
