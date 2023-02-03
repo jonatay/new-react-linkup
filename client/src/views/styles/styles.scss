@@ -1,0 +1,54 @@
+//@tailwind preflight;
+
+@import "./shared", "node_modules/minx/src/reset",
+  "node_modules/minx/src/elements", "./grid";
+
+html {
+  //overflow-y: scroll;
+}
+
+body {
+  //padding-bottom: 120px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(200, 200, 255, 0.1);
+}
+
+.hide {
+  display: none !important;
+}
+
+.ant-collapse {
+  line-height: 18px !important;
+  .ant-collapse-item {
+    .arrow {
+      top: -7px !important;
+    }
+    .ant-collapse-header {
+      padding: 7px 0 0 40px !important;
+    }
+  }
+}
+
+.ant-table-tbody > tr > td {
+  padding: 1px;
+  white-space: nowrap;
+}
+
+.pull-text-right {
+  text-align: right;
+  padding-right: 10px !important;
+}
+
+.ant-statistic-title {
+  padding-left: 4px;
+  margin-top: 4px;
+  margin-bottom: 0;
+  font-weight: bold;
+}
